@@ -48,6 +48,52 @@ WRITE_GEOSTREAMS_CSV = True
 
 
 # Entry point for plot-level RBG algorithm
+
+
+def excess_greenness_index():
+    return 2 * green - (red + blue)
+
+
+def green_leaf_index():
+    return (2 * green - red - blue) / (2 * green + red + blue)
+
+
+def cive():
+    return 0.441 * red - 0.811 * green + 0.385 * blue + 18.78745
+
+
+def normalized_difference_index():
+    return 128 * ((green - red) / (green + red)) + 1
+
+
+def excess_red():
+    return 1.3 * red - green
+
+
+def exgr():
+    return excess_greenness_index() - excess_red()
+
+
+def combined_indices_1():
+    return excess_greenness_index() + cive()
+
+
+def combined_indices_2():
+    return 0.36 * excess_greenness_index() + 0.47 * cive() + 0.17 * vegetative_index()
+
+
+def vegetative_index():
+    return green / ((red ** (0.667)) * (blue ** (.333)))
+
+
+def ngrdi():
+    return (green - red) / (green + red)
+
+
+def percent_green():
+    return green / (red + green + blue)
+
+
 def calculate(pxarray: np.ndarray):
     """Calculates one or more values from plot-level RGB data
     Arguments:
@@ -56,7 +102,16 @@ def calculate(pxarray: np.ndarray):
         Returns one or more calculated values
     """
     # ALGORITHM: replace the following lines with your algorithm
-    channel_size = pxarray[:, :, 1].size
 
-    # RETURN: replace the following return with your calculated values. Be sure to order them as defined in VARIABLE_NAMES above
-    return channel_size
+    # greenness value
+    global green
+    green = np.sum(pxarray[:, :, 1])
+
+    # redness value
+    global red
+    red = np.sum(pxarray[:, :, 0])
+
+    # blueness value
+    global blue
+    blue = np.sum(pxarray[:, :, 2])
+    return
