@@ -50,47 +50,103 @@ WRITE_GEOSTREAMS_CSV = True
 # Entry point for plot-level RBG algorithm
 
 
-def excess_greenness_index():
+def excess_greenness_index(pxarray: np.ndarray):
+    """
+    Minimizes variation between different illuminations and enhances detection
+    of plants
+    """
+    red, green, blue = calculate(pxarray)
+
     return 2 * green - (red + blue)
 
 
-def green_leaf_index():
+def green_leaf_index(pxarray: np.ndarray):
+    """
+    Calculates the green leaf index of an image
+    """
+    red, green, blue = calculate(pxarray)
+
     return (2 * green - red - blue) / (2 * green + red + blue)
 
 
-def cive():
+def cive(pxarray: np.ndarray):
+    """
+    Can measure crop growth status
+    """
+    red, green, blue = calculate(pxarray)
+
     return 0.441 * red - 0.811 * green + 0.385 * blue + 18.78745
 
 
-def normalized_difference_index():
+def normalized_difference_index(pxarray: np.ndarray):
+    """
+    Calculates the normalized difference index of an image
+    """
+    red, green, blue = calculate(pxarray)
+
     return 128 * ((green - red) / (green + red)) + 1
 
 
-def excess_red():
+def excess_red(pxarray: np.ndarray):
+    """
+    Finds potential illumination issues that make it difficult to
+    tease apart redness from crops/leaves from soil or camera
+    artifacts
+    """
+    red, green, blue = calculate(pxarray)
+
     return 1.3 * red - green
 
 
-def exgr():
-    return excess_greenness_index() - excess_red()
+def exgr(pxarray: np.ndarray):
+    """
+    Minimizes the variation between different illuminations
+    """
+
+    return excess_greenness_index(pxarray) - excess_red(pxarray)
 
 
-def combined_indices_1():
-    return excess_greenness_index() + cive()
+def combined_indices_1(pxarray: np.ndarray):
+    """
+    Combined indices calculation 1
+    """
+
+    return excess_greenness_index(pxarray) + cive(pxarray)
 
 
-def combined_indices_2():
-    return 0.36 * excess_greenness_index() + 0.47 * cive() + 0.17 * vegetative_index()
+def combined_indices_2(pxarray: np.ndarray):
+    """
+    Combined indices calculation 2
+    """
+
+    return 0.36 * excess_greenness_index(pxarray) + 0.47 * cive(pxarray) + 0.17 * vegetative_index(pxarray)
 
 
-def vegetative_index():
-    return green / ((red ** (0.667)) * (blue ** (.333)))
+def vegetative_index(pxarray: np.ndarray):
+    """
+    Minimize illumination differences between images
+    """
+    red, green, blue = calculate(pxarray)
+
+    return green / ((red ** 0.667) * (blue ** .333))
 
 
-def ngrdi():
+def ngrdi(pxarray: np.ndarray):
+    """
+    Can measure crop growth status
+    """
+    red, green, blue = calculate(pxarray)
+
     return (green - red) / (green + red)
 
 
-def percent_green():
+def percent_green(pxarray: np.ndarray) -> float:
+    """
+    Returns the percentage of an image that is green, which can be used
+    to identify plant cover
+    """
+    red, green, blue = calculate(pxarray)
+
     return green / (red + green + blue)
 
 
@@ -101,17 +157,13 @@ def calculate(pxarray: np.ndarray):
     Return:
         Returns one or more calculated values
     """
-    # ALGORITHM: replace the following lines with your algorithm
+    # redness value
+    red = np.average(pxarray[:, :, 0])
 
     # greenness value
-    global green
-    green = np.sum(pxarray[:, :, 1])
-
-    # redness value
-    global red
-    red = np.sum(pxarray[:, :, 0])
+    green = np.average(pxarray[:, :, 1])
 
     # blueness value
-    global blue
-    blue = np.sum(pxarray[:, :, 2])
-    return
+    blue = np.average(pxarray[:, :, 2])
+
+    return red, green, blue
