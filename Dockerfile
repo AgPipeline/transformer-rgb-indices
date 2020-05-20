@@ -1,6 +1,6 @@
-# automatically generated: 2020-05-04T15:37:53.053560
+# automatically generated: 2020-05-20T08:40:04.406489
 FROM agpipeline/rgb-plot-base-image:latest
-LABEL maintainer="Unknown <>"
+LABEL maintainer="Unknown <Unknown@gmail.com>"
 
 COPY requirements.txt packages.txt /home/extractor/
 
@@ -27,4 +27,5 @@ RUN [ -s /home/extractor/requirements.txt ] && \
      rm /home/extractor/requirements.txt)
 
 USER extractor
+
 COPY algorithm_rgb.py /home/extractor/
