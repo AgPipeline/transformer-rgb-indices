@@ -2,7 +2,8 @@
 Description <!-- Replace this entire line with a short description of your algorithm -->
 
 ## Authors
-<!-- Replace this comment with a list of the authors of the algorithm pointing out who the main contacts are -->
+Chris Schnaufer: schnaufer@arizona.edu 
+Jacob van der Leeuw: jvanderleeuw@email.arizona.edu
 
 ## References
 <!-- Replace this comment with References to your algorithm and what decisions (Rationale) went into choosing your algorithm -->
