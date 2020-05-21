@@ -1,18 +1,14 @@
-# Title <!-- Replace 'Title' and this comment with a title or name of your algorithm -->
+Greenness Transformer
 Description <!-- Replace this entire line with a short description of your algorithm -->
 
 ## Authors
-Chris Schnaufer: schnaufer@arizona.edu 
-Jacob van der Leeuw: jvanderleeuw@email.arizona.edu
+Chris Schnaufer, University of Arizona, Tucson, AZ
+Jacob van der Leeuw: University of Arizona, Tucson, AZ
 
-## References
-<!-- Replace this comment with References to your algorithm and what decisions (Rationale) went into choosing your algorithm -->
+## Overview
+The Greenness Transformer is meant to provide several calculations on image rgb data in order to get an idea of plant growth and
+health. A more in-depth explanation can be found at [this link](https://docs.google.com/document/d/1cAm5w1Bs6dB1SHgf-HVmwwbebLhbZMUvTkXLtas_-xI/edit)
 
-## Algorithm Overview
-<!-- Replace this comment with descriptions of your algorithm, including assumptions, and what values it produces --> 
-
-## Quality Statement
-<!-- Replace this comment with statements regarding what conditions the algorithm was tested under, known failure conditions, and any other conditions it should work under but weren't tested -->
-
-## Additional Information
-<!-- Replace this comment with links and references to additional information relevant to your algorithm -->
+## Algorithm Description
+This transformer provides calculations using the red, green, and blue values for pixels in an image ranging from calculating the
+percentage of an image which is green to normalized difference calculations and more
