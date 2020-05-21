@@ -140,7 +140,7 @@ def ngrdi(pxarray: np.ndarray):
     return (green - red) / (green + red)
 
 
-def percent_green(pxarray: np.ndarray) -> float:
+def percent_green(pxarray: np.ndarray):
     """
     Returns the percentage of an image that is green, which can be used
     to identify plant cover
