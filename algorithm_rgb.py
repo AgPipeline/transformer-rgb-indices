@@ -21,29 +21,24 @@ CITATION_AUTHOR = 'Clairessa Brown'
 CITATION_TITLE = 'Woebbecke, D.M. et al'
 CITATION_YEAR = '2020'
 
-# The name of one or more variables returned by the algorithm, separated by commas (more information in HOW_TO.md)
-# If only one name is specified, no comma's are used.
-# Note that variable names cannot have comma's in them: use a different separator instead. Also,
-# all white space is kept intact; don't add any extra whitespace since it may cause name comparisons
-# to fail.
+# The name of one or more variables returned by the algorithm, separated by commas
 
 VARIABLE_NAMES = 'excess greenness index, green leaf index, cive, normalized difference index, excess red, ' \
                  'exgr, combined indices 1, combined indices 2, vegetative index, normalized green-red difference,' \
                  ' percent green'
 
 # Variable units matching the order of VARIABLE_NAMES, also comma-separated.
-VARIABLE_UNITS = '[-255,255], [-255,255], [-255,255], [-255,255], [-255,255], [-255,255], ' \
-                 '[-255,255], [-255,255], [-255,255], [-255,255], [0,100]'
+VARIABLE_UNITS = '[-510:510], [-1:1], [-255:255], [-127:129], [-255:255], [-255:332], ' \
+                 '[-1000:1000], [-1000:1000], [-255:255], [-255:255], [0:100]'
 
 # Variable labels matching the order of VARIABLE_NAMES, also comma-separated.
-VARIABLE_LABELS = ''
+VARIABLE_LABELS = 'excess_greenness_index, green_leaf_index, cive, normalized_difference_index(pxarray), ' \
+                'excess_red, exgr, combined_indices_1, combined_indices_2, vegetative_index, ngrdi, percent_green'
 
 # Optional override for the generation of a BETYdb compatible csv file
-# Set to False to suppress the creation of a compatible file
 WRITE_BETYDB_CSV = True
 
 # Optional override for the generation of a TERRA REF Geostreams compatible csv file
-# Set to False to suppress the creation of a compatible file
 WRITE_GEOSTREAMS_CSV = True
 
 
