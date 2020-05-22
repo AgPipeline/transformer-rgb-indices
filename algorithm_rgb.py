@@ -1,23 +1,23 @@
 """Greenness Transformer
 """
 
-# Importing modules. Please add any additional import statements below
+# Importing modules.
 import numpy as np
 
 # Definitions
-# Please replace these definitions' values with the correct ones
 VERSION = '1.0'
 
 # Information on the creator of this algorithm
-ALGORITHM_AUTHOR = 'Chris Schnaufer, Jacob van der Leeuw'
-ALGORITHM_AUTHOR_EMAIL = 'schnaufer@arizona.edu, jvanderleeuw@email.arizona.edu'
-ALGORITHM_CONTRIBUTORS = ["David Lebauer"]
+ALGORITHM_AUTHOR = 'Chris Schnaufer, Clairessa Brown, David Lebauer'
+ALGORITHM_AUTHOR_EMAIL = 'schnaufer@arizona.edu, clairessabrown@email.arizona.edu, dlebauer@email.arizona.edu'
+ALGORITHM_CONTRIBUTORS = ["Jacob van der Leeuw"]
 
-ALGORITHM_NAME = 'my nifty one'
-ALGORITHM_DESCRIPTION = 'This algorithm calculates the niftyness of RGB plot-level images'
+ALGORITHM_NAME = 'Greenness Transformer'
+ALGORITHM_DESCRIPTION = 'This algorithm performs a variety of calculations using RGB pixels from images in order' \
+                        'to assess plant and crop health and growth'
 
-# Citation information for publication (more information in HOW_TO.md)
-CITATION_AUTHOR = 'unknown'
+# Citation information for publication
+CITATION_AUTHOR = 'Clairessa Brown'
 CITATION_TITLE = 'Woebbecke, D.M. et al'
 CITATION_YEAR = '2020'
 
@@ -32,12 +32,10 @@ VARIABLE_NAMES = 'excess greenness index, green leaf index, cive, normalized dif
                  ' percent green'
 
 # Variable units matching the order of VARIABLE_NAMES, also comma-separated.
-# For each variable name in VARIABLE_NAMES add the unit of measurement the value represents.
-# !! Replace the content of this string with your variables' unit
-VARIABLE_UNITS = 'pixels'
+VARIABLE_UNITS = '[-255,255], [-255,255], [-255,255], [-255,255], [-255,255], [-255,255], ' \
+                 '[-255,255], [-255,255], [-255,255], [-255,255], [0,100]'
 
 # Variable labels matching the order of VARIABLE_NAMES, also comma-separated.
-# This is an optional definition and can be left empty.
 VARIABLE_LABELS = ''
 
 # Optional override for the generation of a BETYdb compatible csv file
@@ -59,7 +57,7 @@ def excess_greenness_index(pxarray: np.ndarray) -> float:
     """
     red, green, blue = get_red_green_blue_averages(pxarray)
 
-    return 2 * green - (red + blue)
+    return round(2 * green - (red + blue), 2)
 
 
 def green_leaf_index(pxarray: np.ndarray) -> float:
@@ -68,7 +66,7 @@ def green_leaf_index(pxarray: np.ndarray) -> float:
     """
     red, green, blue = get_red_green_blue_averages(pxarray)
 
-    return (2 * green - red - blue) / (2 * green + red + blue)
+    return round((2 * green - red - blue) / (2 * green + red + blue), 2)
 
 
 def cive(pxarray: np.ndarray) -> float:
@@ -77,7 +75,7 @@ def cive(pxarray: np.ndarray) -> float:
     """
     red, green, blue = get_red_green_blue_averages(pxarray)
 
-    return 0.441 * red - 0.811 * green + 0.385 * blue + 18.78745
+    return round(0.441 * red - 0.811 * green + 0.385 * blue + 18.78745, 2)
 
 
 def normalized_difference_index(pxarray: np.ndarray) -> float:
@@ -86,7 +84,7 @@ def normalized_difference_index(pxarray: np.ndarray) -> float:
     """
     red, green, blue = get_red_green_blue_averages(pxarray)
 
-    return 128 * ((green - red) / (green + red)) + 1
+    return round(128 * ((green - red) / (green + red)) + 1, 2)
 
 
 def excess_red(pxarray: np.ndarray) -> float:
@@ -97,7 +95,7 @@ def excess_red(pxarray: np.ndarray) -> float:
     """
     red, green, blue = get_red_green_blue_averages(pxarray)
 
-    return 1.3 * red - green
+    return round(1.3 * red - green, 2)
 
 
 def exgr(pxarray: np.ndarray) -> float:
@@ -105,7 +103,7 @@ def exgr(pxarray: np.ndarray) -> float:
     Minimizes the variation between different illuminations
     """
 
-    return excess_greenness_index(pxarray) - excess_red(pxarray)
+    return round(excess_greenness_index(pxarray) - excess_red(pxarray), 2)
 
 
 def combined_indices_1(pxarray: np.ndarray) -> float:
@@ -113,7 +111,7 @@ def combined_indices_1(pxarray: np.ndarray) -> float:
     Combined indices calculation 1
     """
 
-    return excess_greenness_index(pxarray) + cive(pxarray)
+    return round(excess_greenness_index(pxarray) + cive(pxarray), 2)
 
 
 def combined_indices_2(pxarray: np.ndarray) -> float:
@@ -121,7 +119,7 @@ def combined_indices_2(pxarray: np.ndarray) -> float:
     Combined indices calculation 2
     """
 
-    return 0.36 * excess_greenness_index(pxarray) + 0.47 * cive(pxarray) + 0.17 * vegetative_index(pxarray)
+    return round(0.36 * excess_greenness_index(pxarray) + 0.47 * cive(pxarray) + 0.17 * vegetative_index(pxarray), 2)
 
 
 def vegetative_index(pxarray: np.ndarray) -> float:
@@ -130,7 +128,7 @@ def vegetative_index(pxarray: np.ndarray) -> float:
     """
     red, green, blue = get_red_green_blue_averages(pxarray)
 
-    return green / ((red ** 0.667) * (blue ** .333))
+    return round(green / ((red ** 0.667) * (blue ** .333)), 2)
 
 
 def ngrdi(pxarray: np.ndarray) -> float:
@@ -139,7 +137,7 @@ def ngrdi(pxarray: np.ndarray) -> float:
     """
     red, green, blue = get_red_green_blue_averages(pxarray)
 
-    return (green - red) / (green + red)
+    return round((green - red) / (green + red), 2)
 
 
 def percent_green(pxarray: np.ndarray) -> float:
@@ -156,7 +154,7 @@ def percent_green(pxarray: np.ndarray) -> float:
     # blueness value
     blue = np.sum(pxarray[:, :, 2])
 
-    return green / (red + green + blue)
+    return round(green / (red + green + blue), 2)
 
 
 def get_red_green_blue_averages(pxarray: np.ndarray) -> tuple:
@@ -180,7 +178,7 @@ def calculate(pxarray: np.ndarray) -> list:
     Arguments:
         pxarray: Array of RGB data for a single plot
     Return:
-        Returns one or more calculated values
+        Returns a list of the calculated values from the
     """
 
     return_list = [excess_greenness_index(pxarray), green_leaf_index(pxarray), cive(pxarray),
