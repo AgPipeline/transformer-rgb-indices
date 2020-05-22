@@ -1,5 +1,6 @@
-Greenness Transformer
-Description <!-- Replace this entire line with a short description of your algorithm -->
+# Greenness Transformer
+Provides a variety of calculations using RGB indices in order to monitor crop/plant
+growth and health, taking into account variations between lighting and cameras
 
 ## Authors
 Chris Schnaufer, University of Arizona, Tucson, AZ
