@@ -32,6 +32,12 @@ jobs:
       - name: Fetch/update setuptools
         run: python3 -m pip install --upgrade --no-cache-dir setuptools
         id: setuptools-install
+      - name: Install python-apt
+        run: sudo apt-get install -y python-apt
+      - name: HACK to fix apt-get update problem w/ different python versions
+        run: 'cd /usr/lib/python3/dist-packages && sudo cp apt_pkg.cpython-36m-x86_64-linux-gnu.so apt_pkg.so'
+      - name: Update apt-get
+        run: sudo apt-get update
       - name: Fetch/update pylint
         run: python3 -m pip install --upgrade --no-cache-dir pylint
         id: pylint-install
@@ -41,6 +47,18 @@ jobs:
       - name: Finding files
         run: find . -type f -name "*.py" > action_pylint_files.txt
         id: find-python-files
+      - name: Install system requirements
+        shell: bash
+        run: 'sudo apt-get install -y python3-gdal gdal-bin libgdal-dev gcc g++ python3.7-dev'
+        id: install-gdal-other-reqs
+      - name: Install Python numpy
+        shell: bash
+        run: 'python3 -m pip install --upgrade --no-cache-dir numpy wheel terrautils'
+        id: install-python-numpy
+      - name: Install Python pygdal
+        shell: bash
+        run: 'sudo python3 -m pip install --no-cache-dir pygdal==2.2.3.5'
+        id: install-python-pygdal
       - name: Install system requirements from source
         shell: bash
         run: '[ -s "packages.txt" ] && (cat packages.txt | xargs apt-get install -y --no-install-recommends) || (echo "No addtional packages to install")'
