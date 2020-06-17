@@ -77,7 +77,7 @@ def normalized_difference_index(pxarray: np.ndarray) -> float:
     """
     Calculates the normalized difference index of an image
     """
-    red, green, blue = get_red_green_blue_averages(pxarray)
+    red, green, _ = get_red_green_blue_averages(pxarray)
 
     return round(128 * ((green - red) / (green + red)) + 1, 2)
 
@@ -88,7 +88,7 @@ def excess_red(pxarray: np.ndarray) -> float:
     tease apart redness from crops/leaves from soil or camera
     artifacts
     """
-    red, green, blue = get_red_green_blue_averages(pxarray)
+    red, green, _ = get_red_green_blue_averages(pxarray)
 
     return round(1.3 * red - green, 2)
 
@@ -130,7 +130,7 @@ def ngrdi(pxarray: np.ndarray) -> float:
     """
     Can measure crop growth status
     """
-    red, green, blue = get_red_green_blue_averages(pxarray)
+    red, green, _ = get_red_green_blue_averages(pxarray)
 
     return round((green - red) / (green + red), 2)
 
