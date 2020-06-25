@@ -1,17 +1,51 @@
-# Title <!-- Replace 'Title' and this comment with a title or name of your algorithm -->
-Description <!-- Replace this entire line with a short description of your algorithm -->
+# Greenness Transformer
+Provides a variety of calculations using RGB indices in order to monitor crop/plant
+growth and health, taking into account variations between lighting and cameras
 
 ## Authors
-<!-- Replace this comment with a list of the authors of the algorithm pointing out who the main contacts are -->
+Chris Schnaufer, University of Arizona, Tucson, AZ
+Jacob van der Leeuw: University of Arizona, Tucson, AZ
+
+## Overview
+The Greenness Transformer is meant to provide several calculations on image rgb data in order to get an idea of plant growth and
+health. A more in-depth explanation can be found at [this link](https://docs.google.com/document/d/1cAm5w1Bs6dB1SHgf-HVmwwbebLhbZMUvTkXLtas_-xI/edit)
+
+## Algorithm Description
+This transformer provides calculations using the red, green, and blue values for pixels in an image ranging from calculating the
+percentage of an image which is green to normalized difference calculations and more
 
 ## References
-<!-- Replace this comment with References to your algorithm and what decisions (Rationale) went into choosing your algorithm -->
 
-## Algorithm Overview
-<!-- Replace this comment with descriptions of your algorithm, including assumptions, and what values it produces --> 
+### excess_greenness_index: 
+Sonnentag, O. et. al, 2012
 
-## Quality Statement
-<!-- Replace this comment with statements regarding what conditions the algorithm was tested under, known failure conditions, and any other conditions it should work under but weren't tested -->
+Named ‘2G_RBi’ in Richardson 2007
 
-## Additional Information
-<!-- Replace this comment with links and references to additional information relevant to your algorithm -->
+### green_leaf_index:
+
+### cive: 
+Kataoka et. al, 2003
+
+### normalized_difference_index: 
+Perez et al., 2000 (links to original paper although equation was slightly modified)
+
+### excess_red
+Meyer et al., 1998 (links to closely related paper)
+
+### exgr: 
+Neto et. al, 2004
+
+### combined_indices_1:
+Guijarro et al., 2011
+
+### combined_indices_2: 
+Guerrerro et al., 2012
+
+### vegetative_index: 
+Hague et al., 2006
+
+### ngrdi:
+Hunt et. al, 2005
+
+### percent_green:
+Richardson et al 2007
