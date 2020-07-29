@@ -1,5 +1,5 @@
 # automatically generated: 2020-05-20T08:40:04.406489
-FROM agpipeline/rgb-plot-base-image:latest
+FROM agdrone/rgb-plot-base-image:latest
 LABEL maintainer="Jacob van der Leeuw <jvanderleeuw@email.arizona.edu>"
 
 COPY requirements.txt packages.txt /home/extractor/
