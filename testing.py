@@ -86,7 +86,7 @@ def check_configuration():
     """
     if not hasattr(algorithm_rgb, 'VARIABLE_NAMES') or not algorithm_rgb.VARIABLE_NAMES:
         sys.stderr.write("Variable names configuration variable is not defined yet. Please define and try again")
-        sys.stderr.write("    Update configuration.py and set VALUE_NAMES variable with your variable names")
+        sys.stderr.write("    Update configuration.py and set VARIABLE_NAMES variable with your variable names")
         return False
 
     return True
