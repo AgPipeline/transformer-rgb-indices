@@ -14,7 +14,8 @@ import testing
 
 SOURCE_FILE = 'testing.py'
 IMAGES = 'images'
-SOURCE_PATH = os.path.abspath(os.path.join('.', SOURCE_FILE))
+PARTIAL_PATH = os.path.abspath(os.path.join('.', SOURCE_FILE))
+SOURCE_PATH = os.path.abspath(os.path.join('.', IMAGES))
 
 
 def test_exists():
@@ -36,5 +37,4 @@ def test_arguments():
     """
     Tests testing.py's check_arguments() function
     """
-    import testing
     return testing.check_arguments()
