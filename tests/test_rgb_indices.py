@@ -15,6 +15,7 @@ IMAGES = 'images'
 PARTIAL_PATH = os.path.abspath(os.path.join('.', SOURCE_FILE))
 SOURCE_PATH = os.path.abspath(os.path.join(PARTIAL_PATH, IMAGES))
 
+
 def test_exists():
     """Asserts that the source file is available"""
     assert os.path.isfile(SOURCE_PATH)
