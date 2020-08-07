@@ -10,10 +10,12 @@ import os
 import re
 from subprocess import getstatusoutput
 
+import pytest
+
 SOURCE_FILE = 'testing.py'
 IMAGES = 'images'
-PARTIAL_PATH = os.path.abspath(os.path.join('.', SOURCE_FILE))
-SOURCE_PATH = os.path.abspath(os.path.join(PARTIAL_PATH, IMAGES))
+SOURCE_PATH = os.path.abspath(os.path.join('.', SOURCE_FILE))
+#SOURCE_PATH = os.path.abspath(os.path.join(PARTIAL_PATH, IMAGES))
 
 
 def test_exists():
@@ -27,5 +29,10 @@ def test_usage():
     """
     for flag in ['-h', '--help']:
         ret_val, out = getstatusoutput(f'{SOURCE_PATH} {flag}')
-        assert ret_val == 0
+        assert ret_val == 1
         assert re.match('usage', out, re.IGNORECASE)
+
+
+def test_arguments():
+    import testing
+    return testing.check_arguments()
