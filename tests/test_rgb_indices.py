@@ -8,13 +8,12 @@ Notes:
 
 import os
 import re
-import pytest
 from subprocess import getstatusoutput
 
 SOURCE_FILE = 'testing.py'
 IMAGES = 'images'
-SOURCE_PATH = os.path.abspath(os.path.join(os.path.join('.', SOURCE_FILE)), IMAGES)
-
+PARTIAL_PATH = os.path.abspath(os.path.join('.', SOURCE_FILE))
+SOURCE_PATH = os.path.abspath(os.path.join(PARTIAL_PATH, IMAGES))
 
 def test_exists():
     """Asserts that the source file is available"""
