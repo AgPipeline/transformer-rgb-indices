@@ -10,6 +10,8 @@ import os
 import re
 from subprocess import getstatusoutput
 
+import testing
+
 SOURCE_FILE = 'testing.py'
 IMAGES = 'images'
 SOURCE_PATH = os.path.abspath(os.path.join('.', SOURCE_FILE))
@@ -31,5 +33,8 @@ def test_usage():
 
 
 def test_arguments():
+    """
+    Tests testing.py's check_arguments() function
+    """
     import testing
     return testing.check_arguments()
