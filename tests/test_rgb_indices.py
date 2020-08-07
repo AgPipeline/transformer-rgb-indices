@@ -10,12 +10,9 @@ import os
 import re
 from subprocess import getstatusoutput
 
-import pytest
-
 SOURCE_FILE = 'testing.py'
 IMAGES = 'images'
 SOURCE_PATH = os.path.abspath(os.path.join('.', SOURCE_FILE))
-#SOURCE_PATH = os.path.abspath(os.path.join(PARTIAL_PATH, IMAGES))
 
 
 def test_exists():
