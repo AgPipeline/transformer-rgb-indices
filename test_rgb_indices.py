@@ -28,7 +28,7 @@ def test_usage():
     for flag in ['-h', '--help']:
         ret_val, out = getstatusoutput(f'{SOURCE_FILE} {flag}')
         assert ret_val == 0
-        print("Output = " + out)
+        print("out.split() = " + out.split("\n")[-1])
         assert out.split("\n")[-1] == "Please correct any problems and try again"
 
 
