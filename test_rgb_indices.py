@@ -27,7 +27,7 @@ def test_usage():
     """
     for flag in ['-h', '--help']:
         ret_val, out = getstatusoutput(f'{SOURCE_FILE} {flag}')
-        assert ret_val == 1
+        assert ret_val == 0
         assert out.split("\n")[-1] == "Please correct any problems and try again"
 
 
@@ -37,7 +37,7 @@ def test_no_args():
     Verify that the program dies on no arguments
     """
     ret_val, out = getstatusoutput(SOURCE_FILE)
-    assert ret_val == 1
+    assert ret_val == 0
     assert re.search("One or more paths to images need to be specified on the command line", out)
 
 
