@@ -81,4 +81,4 @@ jobs:
       - name: Running pylint
         run: cat action_pylint_files.txt | xargs python3 -m pylint --rcfile ./pylint.rc
       - name: Test with pytest
-        run: coverage run --source=. -m py.test
+        run: python3 -m pytest test_rgb_indices.py
