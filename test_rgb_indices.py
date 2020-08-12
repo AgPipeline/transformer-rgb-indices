@@ -48,6 +48,6 @@ def test_good_input():
     """
     cmd = f'{SOURCE_FILE} {TEST_IMAGE}'
     ret_val, output = getstatusoutput(cmd)
-    assert ret_val == 1
+    assert ret_val == 0
     assert output.split("\n")[-1] == "./images/rgb_1_2_E.tif,14.0,0.02,16.16,-1.53," \
                                      "56.53,-42.53,30.16,12.81,1.02,-0.02,0.34"
