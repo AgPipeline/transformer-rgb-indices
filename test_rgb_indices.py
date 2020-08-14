@@ -10,7 +10,7 @@ import os
 import re
 from subprocess import getstatusoutput
 
-os.path.join(os.getcwd()), '..', 'testing.py'
+os.path = os.path.join(os.getcwd()), '..', 'testing.py'
 SOURCE_FILE = '../testing.py'
 TEST_IMAGE = './images/rgb_1_2_E.tif'
 
