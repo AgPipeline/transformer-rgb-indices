@@ -10,7 +10,8 @@ import os
 import re
 from subprocess import getstatusoutput
 
-SOURCE_FILE = './testing.py'
+os.path.join(os.getcwd()), '..', 'testing.py'
+SOURCE_FILE = '../testing.py'
 TEST_IMAGE = './images/rgb_1_2_E.tif'
 
 
@@ -49,5 +50,5 @@ def test_good_input():
     cmd = f'{SOURCE_FILE} {TEST_IMAGE}'
     ret_val, output = getstatusoutput(cmd)
     assert ret_val == 0
-    assert output.split("\n")[-1] == "./images/rgb_1_2_E.tif,14.0,0.02,16.16,-1.53," \
+    assert output.split("\n")[-1] == f"{TEST_IMAGE},14.0,0.02,16.16,-1.53," \
                                      "56.53,-42.53,30.16,12.81,1.02,-0.02,0.34"
