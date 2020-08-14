@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Purpose: Unit testing for algorithm_rgb.py
-Author : Chris Schnaufer <schnaufer@arizona.edu
+Author : Chris Schnaufer <schnaufer@arizona.edu>
 Notes:
     This file assumes it's in a subfolder off the main folder
 """
@@ -11,8 +11,8 @@ import re
 from subprocess import getstatusoutput
 
 os.path = os.path.join(os.getcwd()), '..', 'testing.py'
-SOURCE_FILE = '../testing.py'
-TEST_IMAGE = './images/rgb_1_2_E.tif'
+SOURCE_FILE = './testing.py'
+TEST_IMAGE = './tests/images/rgb_1_2_E.tif'
 
 
 # --------------------------------------------------
