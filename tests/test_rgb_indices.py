@@ -10,7 +10,7 @@ import os
 import re
 from subprocess import getstatusoutput
 
-SOURCE_FILE = './testing.py'
+SOURCE_FILE = '../testing.py'
 TEST_IMAGE = './tests/images/rgb_1_2_E.tif'
 
 
