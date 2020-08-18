@@ -79,4 +79,7 @@ jobs:
         run: cat action_pylint_files.txt
       - name: Running pylint
         run: cat action_pylint_files.txt | xargs python3 -m pylint --rcfile ./pylint.rc
-
+      - name: Install pytest
+        run: python3 -m pip install pytest
+      - name: Test with pytest
+        run: python3 -m pytest

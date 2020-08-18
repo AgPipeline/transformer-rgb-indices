@@ -6,7 +6,8 @@
 import os
 import sys
 import numpy as np
-import gdal
+
+from osgeo import gdal
 
 import algorithm_rgb
 
