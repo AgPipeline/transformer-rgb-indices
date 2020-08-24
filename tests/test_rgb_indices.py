@@ -27,7 +27,7 @@ def test_exists():
 # Unit testing
 def test_fail_file_or_folder_arg():
     """Tests non-files or folders passed in to file-or-folder testing used by argparse"""
-    # pylint: disable=import-outside-toplevel
+    # pylint: disable=import-outside-toplevel, protected-access
     import testing as tt
 
     for one_folder in ['/bogus/folder', 'invalid_file.xyz']:
@@ -37,7 +37,7 @@ def test_fail_file_or_folder_arg():
 
 def test_file_or_folder_arg():
     """Tests file-or-folder function used by argparse to validate input"""
-    # pylint: disable=import-outside-toplevel
+    # pylint: disable=import-outside-toplevel, protected-access
     import testing as tt
 
     for one_folder in [os.path.abspath('.'), TEST_IMAGE]:
@@ -47,7 +47,7 @@ def test_file_or_folder_arg():
 
 def test_get_variables_header_fields():
     """Tests getting variables header fields"""
-    # pylint: disable=import-outside-toplevel
+    # pylint: disable=import-outside-toplevel, protected-access
     import testing as tt
 
     headers = tt._get_variables_header_fields()
@@ -56,7 +56,6 @@ def test_get_variables_header_fields():
 
 def test_check_configuration():
     """Checks that the configuration is setup"""
-    """Tests getting variables header fields"""
     # pylint: disable=import-outside-toplevel
     import testing as tt
 
