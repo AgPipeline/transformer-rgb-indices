@@ -32,7 +32,7 @@ def test_fail_file_or_folder_arg():
 
     for one_folder in ['/bogus/folder', 'invalid_file.xyz']:
         with pytest.raises(argparse.ArgumentTypeError):
-            res = tt._file_or_folder_arg(one_folder)
+            _ = tt._file_or_folder_arg(one_folder)
 
 
 def test_file_or_folder_arg():
