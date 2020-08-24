@@ -17,6 +17,7 @@ TESTING_PATH = os.path.abspath(os.path.join('.', TESTING_FILE))
 
 # Test image to use
 TEST_IMAGE = os.path.realpath('./test_data/rgb_1_2_E.tif')
+TEST_IMAGE_FOLDER = os.path.split(TEST_IMAGE)[0]
 
 
 def test_exists():
@@ -79,9 +80,18 @@ def test_no_args():
     assert re.search('the following arguments are required', out)
 
 
-def test_good_input():
+def test_good_file():
     """Test with good inputs"""
     cmd = f'{TESTING_PATH} {TEST_IMAGE}'
+    ret_val, out = getstatusoutput(cmd)
+    assert ret_val == 0
+    assert out.split("\n")[-1] == f"{TEST_IMAGE},14.0,0.02,16.16,-1.53,"\
+                                  "56.53,-42.53,30.16,12.81,1.02,-0.02,0.34"
+
+
+def test_good_folder():
+    """Test with good inputs"""
+    cmd = f'{TESTING_PATH} {TEST_IMAGE_FOLDER}'
     ret_val, out = getstatusoutput(cmd)
     assert ret_val == 0
     assert out.split("\n")[-1] == f"{TEST_IMAGE},14.0,0.02,16.16,-1.53,"\
