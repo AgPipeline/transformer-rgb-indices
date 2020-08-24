@@ -6,48 +6,84 @@ Notes:
     This file assumes it's in a subfolder off the main folder
 """
 
+import argparse
 import os
 import re
 from subprocess import getstatusoutput
+import pytest
 
-SOURCE_FILE = './testing.py'
-TEST_IMAGE = './tests/images/rgb_1_2_E.tif'
+TESTING_FILE = 'testing.py'
+TESTING_PATH = os.path.abspath(os.path.join('.', TESTING_FILE))
+
+# Test image to use
+TEST_IMAGE = os.path.realpath('./test_data/rgb_1_2_E.tif')
 
 
-# --------------------------------------------------
 def test_exists():
     """Asserts that the source file is available"""
-    assert (os.path.isfile(SOURCE_FILE) and os.path.isfile(TEST_IMAGE))
+    assert (os.path.isfile(TESTING_PATH) and os.path.isfile(TEST_IMAGE))
 
 
-# --------------------------------------------------
+# Unit testing
+def test_fail_file_or_folder_arg():
+    """Tests non-files or folders passed in to file-or-folder testing used by argparse"""
+    # pylint: disable=import-outside-toplevel
+    import testing as tt
+
+    for one_folder in ['/bogus/folder', 'invalid_file.xyz']:
+        with pytest.raises(argparse.ArgumentTypeError):
+            res = tt._file_or_folder_arg(one_folder)
+
+
+def test_file_or_folder_arg():
+    """Tests file-or-folder function used by argparse to validate input"""
+    # pylint: disable=import-outside-toplevel
+    import testing as tt
+
+    for one_folder in [os.path.abspath('.'), TEST_IMAGE]:
+        res = tt._file_or_folder_arg(one_folder)
+        assert res == one_folder
+
+
+def test_get_variables_header_fields():
+    """Tests getting variables header fields"""
+    # pylint: disable=import-outside-toplevel
+    import testing as tt
+
+    headers = tt._get_variables_header_fields()
+    assert len(headers) >= 1
+
+
+def test_check_configuration():
+    """Checks that the configuration is setup"""
+    """Tests getting variables header fields"""
+    # pylint: disable=import-outside-toplevel
+    import testing as tt
+
+    setup = tt.check_configuration()
+    assert setup is True
+
+
+# Integration Testing
 def test_usage():
-    """
-    Program prints a "usage" statement when requested
-    """
+    """Program prints a "usage" statement when requested"""
     for flag in ['-h', '--help']:
-        ret_val, out = getstatusoutput(f'{SOURCE_FILE} {flag}')
+        ret_val, out = getstatusoutput(f'{TESTING_PATH} {flag}')
+        assert re.match('usage', out, re.IGNORECASE)
         assert ret_val == 0
-        assert out.split("\n")[0] == "Please correct any problems and try again"
 
 
-# --------------------------------------------------
 def test_no_args():
-    """
-    Verify that the program dies on no arguments
-    """
-    ret_val, out = getstatusoutput(SOURCE_FILE)
-    assert ret_val == 0
-    assert re.search("One or more paths to images need to be specified on the command line", out)
+    """Verify that the program dies on no arguments"""
+    ret_val, out = getstatusoutput(f'{TESTING_PATH}')
+    assert ret_val == 2
+    assert re.search('the following arguments are required', out)
 
 
-# --------------------------------------------------
 def test_good_input():
-    """
-    Test with good inputs
-    """
-    cmd = f'{SOURCE_FILE} {TEST_IMAGE}'
-    ret_val, output = getstatusoutput(cmd)
+    """Test with good inputs"""
+    cmd = f'{TESTING_PATH} {TEST_IMAGE}'
+    ret_val, out = getstatusoutput(cmd)
     assert ret_val == 0
-    assert output.split("\n")[-1] == f"{TEST_IMAGE},14.0,0.02,16.16,-1.53," \
-                                     "56.53,-42.53,30.16,12.81,1.02,-0.02,0.34"
+    assert out.split("\n")[-1] == f"{TEST_IMAGE},14.0,0.02,16.16,-1.53,"\
+                                  "56.53,-42.53,30.16,12.81,1.02,-0.02,0.34"
