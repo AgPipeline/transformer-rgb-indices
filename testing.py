@@ -3,6 +3,7 @@
 """Test script for algorithm_rgb code
 """
 
+import argparse
 import os
 import sys
 import numpy as np
@@ -10,6 +11,21 @@ import numpy as np
 from osgeo import gdal
 
 import algorithm_rgb
+
+
+def _file_or_folder_arg(param: str) -> str:
+    """Used by argparse to check if an argument is a file or a folder
+    Arguments:
+        param: the parameter to check
+    Returns:
+        Returns the param string if it's a valid file or folder that exists. This does not mean that
+        the application has the necessary permissions to the file or folder.
+    Exception:
+        Raises an argparse.ArgumentTypeError exception if the param path doesn't exist
+    """
+    if os.path.exists(param):
+        return param
+    raise argparse.ArgumentTypeError('"%s" is not a file or a folder' % param)
 
 
 def _get_variables_header_fields() -> str:
@@ -44,42 +60,17 @@ def _get_variables_header_fields() -> str:
     return headers
 
 
-def print_usage():
-    """Displays information on how to use this script
-    """
-    argc = len(sys.argv)
-    if argc:
-        our_name = os.path.basename(sys.argv[0])
-    else:
-        our_name = os.path.basename(__file__)
-    print(our_name + " <folder>|<filename> ...")
-    print("    folder:   path to folder containing images to process")
-    print("    filename: path to an image file to process")
-    print("")
-    print("  One or more folders and/or filenames can be used")
-    print("  Only files at the top level of a folder are processed")
+def get_arguments() -> argparse.Namespace:
+    """Sets up and parses command line arguments"""
+    argparse_description = 'Testing RGB algorithm'
+    if hasattr(algorithm_rgb, 'ALGORITHM_NAME') and algorithm_rgb.ALGORITHM_NAME:
+        argparse_description += ' for "' + algorithm_rgb.ALGORITHM_NAME + '"'
+    parser = argparse.ArgumentParser(argparse_description)
 
+    parser.add_argument('file_folder', action='append', type=_file_or_folder_arg,
+                        help='Image files and/or folders containing images')
 
-def check_arguments():
-    """Checks that we have script argument parameters that appear valid
-    """
-    argc = len(sys.argv)
-    if argc < 2:
-        sys.stderr.write("One or more paths to images need to be specified on the command line\n")
-        print_usage()
-        return False
-
-    # Check that the paths exist.
-    have_errors = False
-    for idx in range(1, argc):
-        if not os.path.exists(sys.argv[idx]):
-            print("The following path doesn't exist: " + sys.argv[idx])
-            have_errors = True
-
-    if have_errors:
-        sys.stderr.write("Please correct any problems and try again\n")
-
-    return not have_errors
+    return parser.parse_args()
 
 
 def check_configuration():
@@ -93,12 +84,14 @@ def check_configuration():
     return True
 
 
-def run_test(filename):
-    """Runs the extractor code using pixels from the file
+def run_test(filename: str):
+    """Runs the extractor code using pixels from the file and prints the result
     Args:
-        filename(str): Path to image file
+        filename: Path to image file
     Return:
         The result of calling the extractor's calculate() method
+    Exceptions:
+        Raises RuntimeError if there's a problem with the returned values
     Notes:
         Assumes the path passed in is valid. An error is reported if
         the file is not an image file.
@@ -112,7 +105,8 @@ def run_test(filename):
 
             # Check for unsupported types
             if isinstance(calc_val, set):
-                raise RuntimeError("A 'set' type of data was returned and isn't supported.  Please use a list or a tuple instead")
+                raise RuntimeError("A 'set' type of data was returned and isn't supported. "
+                                   "Please use a list or a tuple instead")
 
             # Perform any type conversions to a printable string
             if isinstance(calc_val, str):
@@ -131,22 +125,25 @@ def run_test(filename):
         sys.stderr.write("    File: " + filename + "\n")
 
 
-def process_files():
+def process_files(user_args: argparse.Namespace):
     """Processes the command line file/folder arguments
+    Parameters:
+        user_args: the result of parsing the command line using argparse
     """
-    argc = len(sys.argv)
-    if argc:
+    if user_args:
         print("Filename," + _get_variables_header_fields())
-        for idx in range(1, argc):
-            cur_path = sys.argv[idx]
-            if not os.path.isdir(cur_path):
-                run_test(cur_path)
+        for one_path in user_args.file_folder:
+            if not os.path.isdir(one_path):
+                run_test(one_path)
             else:
-                allfiles = [os.path.join(cur_path, fn) for fn in os.listdir(cur_path)  if os.path.isfile(os.path.join(cur_path, fn))]
+                allfiles = [os.path.join(one_path, fn) for fn in os.listdir(one_path)
+                            if os.path.isfile(os.path.join(one_path, fn))]
                 for one_file in allfiles:
                     run_test(one_file)
 
 
 if __name__ == "__main__":
-    if check_arguments() and check_configuration():
-        process_files()
+    args = get_arguments()
+    if args and check_configuration():
+        process_files(args)
+    sys.exit(0)
