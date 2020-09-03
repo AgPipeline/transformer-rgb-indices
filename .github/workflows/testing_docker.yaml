@@ -56,6 +56,7 @@ jobs:
         run: echo "Outputs folder" && ls -l ./outputs
       - name: Check outputs
         run: |
+             cat "outputs/rgb_plot.csv"
              chmod +x "./.github/workflows/docker_test_check.sh"
              "./.github/workflows/docker_test_check.sh"
 
