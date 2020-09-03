@@ -4,7 +4,7 @@
 
 # Define expected results
 EXPECTED_FILES=("rgb_plot.csv")
-EXPECTED_GREENNESS_VALUES=((2.3 0 20.55 1.6 52.72 -50.42 22.85 10.66 1.01 0.0 0.33))
+EXPECTED_GREENNESS_VALUES=(2.3 0 20.55 1.6 52.72 -50.42 22.85 10.66 1.01 0.0 0.33)
 
 # What folder are we looking in for outputs
 if [[ ! "${1}" == "" ]]; then
