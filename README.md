@@ -66,13 +66,24 @@ Hague, T., N. D. Tillett, and H. Wheeler. "Automated crop and weed monitoring in
 
 Richardson, Andrew D., Julian P. Jenkins, Bobby H. Braswell, David Y. Hollinger, Scott V. Ollinger, and Marie-Louise Smith. "Use of digital webcam images to track spring green-up in a deciduous broadleaf forest." Oecologia 152, no. 2 (2007): 323-334. https://doi.org/10.1007/s00442-006-0657-z
 
+## Use 
+
 ### Sample Docker Command line
+
+First build the Docker image, using the Dockerfile, and tag it agdrone/transformer-greenness:1.0 . 
+Read about the [docker build](https://docs.docker.com/engine/reference/commandline/build/) command if needed.
+
+```bash
+docker build -t agdrone/transformer-greenness:1.0 ./
+```
 
 Below is a sample command line that shows how the soil mask Docker image could be run.
 An explanation of the command line options used follows.
 Be sure to read up on the [docker run](https://docs.docker.com/engine/reference/run/) command line for more information.
 
-```docker run --rm --mount "src=${PWD}/test_data,target=/mnt,type=bind" agdrone/transformer-greenness:1.0 --working_space "/mnt" --metadata "/mnt/experiment.yaml" "/mnt/rgb_1_2_E.tif" ```
+```bash
+docker run --rm --mount "src=${PWD}/test_data,target=/mnt,type=bind" agdrone/transformer-greenness:1.0 --working_space "/mnt" --metadata "/mnt/experiment.yaml" "/mnt/rgb_1_2_E.tif"
+```
 
 This example command line assumes the source files are located in the `test_data` folder off the current folder.
 The name of the image to run is `agdrone/transformer-greenness:1.0`.
