@@ -65,3 +65,94 @@ Hunt, E. Raymond, Michel Cavigelli, Craig ST Daughtry, James E. Mcmurtrey, and C
 Hague, T., N. D. Tillett, and H. Wheeler. "Automated crop and weed monitoring in widely spaced cereals." Precision Agriculture 7, no. 1 (2006): 21-32. https://doi.org/10.1007/s11119-005-6787-1
 
 Richardson, Andrew D., Julian P. Jenkins, Bobby H. Braswell, David Y. Hollinger, Scott V. Ollinger, and Marie-Louise Smith. "Use of digital webcam images to track spring green-up in a deciduous broadleaf forest." Oecologia 152, no. 2 (2007): 323-334. https://doi.org/10.1007/s00442-006-0657-z
+
+## Use 
+
+### Sample Docker Command line
+
+First build the Docker image, using the Dockerfile, and tag it agdrone/transformer-greenness:1.0 . 
+Read about the [docker build](https://docs.docker.com/engine/reference/commandline/build/) command if needed.
+
+```bash
+docker build -t agdrone/transformer-greenness:1.0 ./
+```
+
+Below is a sample command line that shows how the soil mask Docker image could be run.
+An explanation of the command line options used follows.
+Be sure to read up on the [docker run](https://docs.docker.com/engine/reference/run/) command line for more information.
+
+```bash
+docker run --rm --mount "src=${PWD}/test_data,target=/mnt,type=bind" agdrone/transformer-greenness:1.0 --working_space "/mnt" --metadata "/mnt/experiment.yaml" "/mnt/rgb_1_2_E.tif"
+```
+
+This example command line assumes the source files are located in the `test_data` folder off the current folder.
+The name of the image to run is `agdrone/transformer-greenness:1.0`.
+
+We are using the same folder for the source files and the output files.
+By using multiple `--mount` options, the source and output files can be separated.
+
+**Docker commands** \
+Everything between 'docker' and the name of the image are docker commands.
+
+- `run` indicates we want to run an image
+- `--rm` automatically delete the image instance after it's run
+- `--mount "src=${PWD}/test_data,target=/mnt,type=bind"` mounts the `${PWD}/test_data` folder to the `/mnt` folder of the running image
+
+We mount the `${PWD}/test_data` folder to the running image to make files available to the software in the image.
+
+**Image's commands** \
+The command line parameters after the image name are passed to the software inside the image.
+Note that the paths provided are relative to the running image (see the --mount option specified above).
+
+- `--working_space "/mnt"` specifies the folder to use as a workspace
+- `--metadata "/mnt/experiment.yaml"` is the name of the source metadata
+- `"/mnt/rgb_1_2_E.tif"` is the name of the image to calculate greenness on
+
+## Acceptance Testing
+
+There are automated test suites that are run via [GitHub Actions](https://docs.github.com/en/actions).
+In this section we provide details on these tests so that they can be run locally as well.
+
+These tests are run when a [Pull Request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests) or [push](https://docs.github.com/en/github/using-git/pushing-commits-to-a-remote-repository) occurs on the `develop` or `master` branches.
+There may be other instances when these tests are automatically run, but these are considered the mandatory events and branches.
+
+### PyLint and PyTest
+
+These tests are run against any Python scripts that are in the repository.
+
+[PyLint](https://www.pylint.org/) is used to both check that Python code conforms to the recommended coding style, and checks for syntax errors.
+The default behavior of PyLint is modified by the `pylint.rc` file in the [Organization-info](https://github.com/AgPipeline/Organization-info) repository.
+Please also refer to our [Coding Standards](https://github.com/AgPipeline/Organization-info#python) for information on how we use [pylint](https://www.pylint.org/).
+
+The following command can be used to fetch the `pylint.rc` file:
+```bash
+wget https://raw.githubusercontent.com/AgPipeline/Organization-info/master/pylint.rc
+```
+
+Assuming the `pylint.rc` file is in the current folder, the following command can be used against the `algorithm_rgb.py` file:
+```bash
+# Assumes Python3.7+ is default Python version
+python -m pylint --rcfile ./pylint.rc algorithm_rgb.py
+``` 
+
+In the `tests` folder there are testing scripts; their supporting files are in the `test_data` folder.
+The tests are designed to be run with [Pytest](https://docs.pytest.org/en/stable/).
+When running the tests, the root of the repository is expected to be the starting directory.
+
+The command line for running the tests is as follows:
+```bash
+# Assumes Python3.7+ is default Python version
+python -m pytest -rpP
+```
+
+If [pytest-cov](https://pytest-cov.readthedocs.io/en/latest/) is installed, it can be used to generate a code coverage report as part of running PyTest.
+The code coverage report shows how much of the code has been tested; it doesn't indicate **how well** that code has been tested.
+The modified PyTest command line including coverage is:
+```bash
+# Assumes Python3.7+ is default Python version
+python -m pytest --cov=. -rpP 
+```
+
+### Docker Testing
+
+The Docker testing Workflow replicate the examples in this document to ensure they continue to work.
