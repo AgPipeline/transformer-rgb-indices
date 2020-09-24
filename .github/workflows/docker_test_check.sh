@@ -36,7 +36,7 @@ BEGIN {
     FPAT = "([^,]+)|(\"[^\"]+\")"
 }
 {
-  if ($1 != "germplasmName") { # Skipping the header line
+  if ($1 != "species") { # Skipping the header line
     printf("(%s %s %s %s %s %s %s %s %s %s %s)\n", $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)
   }
 }
