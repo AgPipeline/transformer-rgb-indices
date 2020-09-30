@@ -140,14 +140,22 @@ def percent_green(pxarray: np.ndarray) -> float:
     Returns the percentage of an image that is green, which can be used
     to identify plant cover
     """
-    # redness value
-    red = np.sum(pxarray[:, :, 0])
-
-    # greenness value
-    green = np.sum(pxarray[:, :, 1])
-
-    # blueness value
-    blue = np.sum(pxarray[:, :, 2])
+    if pxarray.shape[2] < 4:
+        # Get redness, greenness, and blueness values
+        red = np.sum(pxarray[:, :, 0])
+        green = np.sum(pxarray[:, :, 1])
+        blue = np.sum(pxarray[:, :, 2])
+    else:
+        # Handle Alpha channel masking
+        # Get redness, greenness, and blueness values
+        alpha_mask = np.where(pxarray[:, :, 3] == 0, 1, 0)  # Convert alpha channel to numpy.ma format
+        channel_masked = np.ma.array(pxarray[:, :, 0], mask=alpha_mask)
+        red = np.ma.sum(channel_masked)
+        channel_masked = np.ma.array(pxarray[:, :, 1], mask=alpha_mask)
+        green = np.ma.sum(channel_masked)
+        channel_masked = np.ma.array(pxarray[:, :, 2], mask=alpha_mask)
+        blue = np.ma.sum(channel_masked)
+        del channel_masked
 
     return round(green / (red + green + blue), 2)
 
@@ -156,16 +164,24 @@ def get_red_green_blue_averages(pxarray: np.ndarray) -> tuple:
     """
     Returns the average red, green, and blue values in a pxarray object
     """
-    # redness value
-    red = np.average(pxarray[:, :, 0])
+    if pxarray.shape[2] < 4:
+        # Get redness, greenness, and blueness values
+        red = np.average(pxarray[:, :, 0])
+        green = np.average(pxarray[:, :, 1])
+        blue = np.average(pxarray[:, :, 2])
+    else:
+        # Handle Alpha channel masking
+        # Get redness, greenness, and blueness values
+        alpha_mask = np.where(pxarray[:, :, 3] == 0, 1, 0)  # Convert alpha channel to numpy.ma format
+        channel_masked = np.ma.array(pxarray[:, :, 0], mask=alpha_mask)
+        red = np.ma.average(channel_masked)
+        channel_masked = np.ma.array(pxarray[:, :, 1], mask=alpha_mask)
+        green = np.ma.average(channel_masked)
+        channel_masked = np.ma.array(pxarray[:, :, 2], mask=alpha_mask)
+        blue = np.ma.average(channel_masked)
+        del channel_masked
 
-    # greenness value
-    green = np.average(pxarray[:, :, 1])
-
-    # blueness value
-    blue = np.average(pxarray[:, :, 2])
-
-    return (red, green, blue)
+    return red, green, blue
 
 
 def calculate(pxarray: np.ndarray) -> list:
@@ -175,7 +191,6 @@ def calculate(pxarray: np.ndarray) -> list:
     Return:
         Returns a list of the calculated values from the
     """
-
     return_list = [excess_greenness_index(pxarray), green_leaf_index(pxarray), cive(pxarray),
                    normalized_difference_index(pxarray), excess_red(pxarray), exgr(pxarray),
                    combined_indices_1(pxarray), combined_indices_2(pxarray), vegetative_index(pxarray),
