@@ -148,7 +148,7 @@ def percent_green(pxarray: np.ndarray) -> float:
     else:
         # Handle Alpha channel masking
         # Get redness, greenness, and blueness values
-        alpha_mask = np.where(pxarray[:, :, 3] == 0, 1, 0)  # Convert alpha channel to numpy.ma format
+        alpha_mask = np.where(pxarray[:, :, 3] == 0, 1, 0)  # Convert alpha channel to numpy.ma acceptable format
         channel_masked = np.ma.array(pxarray[:, :, 0], mask=alpha_mask)
         red = np.ma.sum(channel_masked)
         channel_masked = np.ma.array(pxarray[:, :, 1], mask=alpha_mask)
@@ -172,7 +172,7 @@ def get_red_green_blue_averages(pxarray: np.ndarray) -> tuple:
     else:
         # Handle Alpha channel masking
         # Get redness, greenness, and blueness values
-        alpha_mask = np.where(pxarray[:, :, 3] == 0, 1, 0)  # Convert alpha channel to numpy.ma format
+        alpha_mask = np.where(pxarray[:, :, 3] == 0, 1, 0)  # Convert alpha channel to numpy.ma acceptable format
         channel_masked = np.ma.array(pxarray[:, :, 0], mask=alpha_mask)
         red = np.ma.average(channel_masked)
         channel_masked = np.ma.array(pxarray[:, :, 1], mask=alpha_mask)
