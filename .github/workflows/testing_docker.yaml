@@ -4,7 +4,6 @@ on:
     branches:
       - master
       - develop
-      - data_quality_checks
   pull_request:
     branches:
       - master
@@ -63,7 +62,9 @@ jobs:
       - name: Data quality check
         run: |
               curl -sfL https://raw.githubusercontent.com/aswinkarthik/csvdiff/master/install.sh | sh -s -- -b ./csvdiff
+              echo "Showing differenced - if any"
               ./csvdiff/csvdiff './test_data/rgb_plot.csv' './outputs/rgb_plot.csv' --ignore-columns "0,1,2,3,4,5,6,7" --primary-key 4 --format rowmark
+              echo "Running check"
               if [[ "$(./csvdiff/csvdiff './test_data/rgb_plot.csv' './outputs/rgb_plot.csv' --ignore-columns "0,1,2,3,4,5,6,7" --primary-key 4 --format rowmark 2>&1 | grep -A 5 'Rows:' | wc -l  | tr -d '[:space:]')" == "1" ]]; then echo "Test greenness indicies content matches expected"; exit 0; else echo "Error - greenness indicies contents mismatch from test_data/rgb_plot.csv"; exit 1; fi;
 
   artifact_cleanup:
