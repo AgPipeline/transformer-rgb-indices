@@ -1,3 +1,8 @@
+[![license](https://img.shields.io/badge/license-BSD%203-green?logo=Open-Source-Initiative)](https://github.com/AgPipeline/transformer-rgb-indices/blob/master/LICENSE)
+
+[![Enforcing testing](https://github.com/AgPipeline/transformer-rgb-indices/workflows/Enforcing%20tests/badge.svg)](https://github.com/AgPipeline/transformer-rgb-indices/actions?query=workflow%3A%22Enforcing+tests%22)
+[![testing](https://github.com/AgPipeline/transformer-rgb-indices/workflows/Testing%20Docker%20image/badge.svg)](https://github.com/AgPipeline/transformer-rgb-indices/actions?query=workflow%3A%22Testing+Docker+image%22)
+
 # Greenness Indices
 
 This algorithm computes a series of indices from RGB cameras. These can be used to assess crop and plant
