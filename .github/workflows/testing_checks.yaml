@@ -51,6 +51,9 @@ jobs:
         uses: actions/checkout@v2
       - name: Finding files
         run: find . -type f -name "*.py" > action_test_files.txt
+      - name: Update apt databases
+        shell: bash
+        run: 'sudo apt-get update'
       - name: Install system requirements
         shell: bash
         run: 'sudo apt-get install -y python3-gdal gdal-bin libgdal-dev gcc g++ python3.8-dev'
