@@ -31,19 +31,21 @@ do
 done
 
 # Check the results of the canopy cover calculation
+echo "CHECKING ${TARGET_FOLDER}/${CHECK_FILE}"
 RESULT_VALUES=(`gawk '
 BEGIN {
     FPAT = "([^,]+)|(\"[^\"]+\")"
 }
 {
   if ($1 != "species") { # Skipping the header line
-    printf("(%s %s %s %s %s %s %s %s %s %s %s)\n", $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)
+    printf("(%s %s %s %s %s %s %s %s %s %s %s)\n", $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
   }
 }
 END {
 }
 ' "${TARGET_FOLDER}/${CHECK_FILE}"`)
 
+echo "RESULTS: ${RESULT_VALUES}"
 echo "Result counts: ${#EXPECTED_GREENNESS_VALUES[@]} vs ${#RESULT_VALUES[@]}"
 if [[ ${#EXPECTED_GREENNESS_VALUES[@]} != ${#RESULT_VALUES[@]} ]]; then
   echo "Number of results found in file (${#RESULT_VALUES[@]}) don't match expected count (${#EXPECTED_GREENNESS_VALUES[@]})"
