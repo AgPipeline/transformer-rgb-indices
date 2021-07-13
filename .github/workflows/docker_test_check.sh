@@ -44,7 +44,6 @@ END {
 }
 ' "${TARGET_FOLDER}/${CHECK_FILE}"`)
 
-echo "RESULTS: ${RESULT_VALUES}"
 echo "Result counts: ${#EXPECTED_GREENNESS_VALUES[@]} vs ${#RESULT_VALUES[@]}"
 if [[ ${#EXPECTED_GREENNESS_VALUES[@]} != ${#RESULT_VALUES[@]} ]]; then
   echo "Number of results found in file (${#RESULT_VALUES[@]}) don't match expected count (${#EXPECTED_GREENNESS_VALUES[@]})"
