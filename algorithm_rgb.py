@@ -35,12 +35,6 @@ VARIABLE_UNITS = '[-510:510], [-1:1], [-255:255], [-127:129], [-255:255], [-255:
 VARIABLE_LABELS = 'excess_greenness_index, green_leaf_index, cive, normalized_difference_index(pxarray), ' \
                 'excess_red, exgr, combined_indices_1, combined_indices_2, vegetative_index, ngrdi, percent_green'
 
-# Optional override for the generation of a BETYdb compatible csv file
-WRITE_BETYDB_CSV = True
-
-# Optional override for the generation of a TERRA REF Geostreams compatible csv file
-WRITE_GEOSTREAMS_CSV = True
-
 
 # Entry point for plot-level RBG algorithm
 
