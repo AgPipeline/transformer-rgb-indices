@@ -31,7 +31,6 @@ do
 done
 
 # Check the results of the canopy cover calculation
-echo "CHECKING ${TARGET_FOLDER}/${CHECK_FILE}"
 RESULT_VALUES=(`gawk '
 BEGIN {
     FPAT = "([^,]+)|(\"[^\"]+\")"
