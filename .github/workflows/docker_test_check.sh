@@ -38,7 +38,7 @@ BEGIN {
 }
 {
   if ($1 != "species") { # Skipping the header line
-    printf("(%s %s %s %s %s %s %s %s %s %s %s)\n", $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+    printf("(%s %s %s %s %s %s %s %s %s %s %s)\n", $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
   }
 }
 END {
