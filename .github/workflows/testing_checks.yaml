@@ -44,7 +44,7 @@ jobs:
       - name: Update pip
         run: python3 -m pip install --upgrade --no-cache-dir pip
       - name: Fetch/update setuptools
-        run: python3 -m pip install --upgrade --no-cache-dir setuptools
+        run: python3 -m pip install --upgrade --no-cache-dir setuptools==58.0.1
       - name: Fetch/update testing pip installations
         run: python3 -m pip install --upgrade --no-cache-dir ${{ matrix.pip_installs }}
       - name: Fetch source code
